@@ -1,0 +1,70 @@
+import java.util.Scanner;
+
+
+public class Methods {
+
+
+    public static void main( String[] args ) {
+        Scanner scanner = new Scanner(System.in);
+
+
+        int quantity = Integer.parseInt(scanner.nextLine());
+        int totalDays = Integer.parseInt(scanner.nextLine());
+
+
+        int cost = 0;
+        int spirit = 0;
+        int totalCost = 0;
+
+        int ornamentSet = 2;
+        int treeSkirt = 5;
+        int treeGarlands = 3;
+        int treeLights = 15;
+
+
+        for (int days = 1; days <= totalDays; days++) {
+
+            if (days % 11 == 0) {
+                quantity += 2;
+            }
+
+            if (days % 2 == 0) {
+                cost = quantity * ornamentSet;
+                totalCost += cost;
+                spirit += 5;
+
+
+            }
+            if (days % 3 == 0) {
+                cost = quantity * treeSkirt + quantity * treeGarlands;
+
+                totalCost += cost;
+                spirit += 13;
+            }
+            if (days % 5 == 0) {
+                cost = quantity * treeLights;
+                totalCost += cost;
+                spirit += 17;
+
+                if (days % 3 == 0) {
+                    spirit += 30;
+                }
+            }
+
+            if (days % 10 == 0) {
+                spirit -= 20;
+                cost = treeSkirt + treeGarlands + treeLights;
+                totalCost += cost;
+
+                if (days == totalDays) {
+                    spirit -= 30;
+                }
+            }
+
+
+        }
+
+        System.out.printf("Total cost: %d%n", totalCost);
+        System.out.printf("Total spirit: %d", spirit);
+    }
+}
