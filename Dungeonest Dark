@@ -1,0 +1,64 @@
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.*;
+import java.util.stream.Collectors;
+
+
+public class Methods {
+
+
+    public static void main( String[] args ) {
+        Scanner scanner = new Scanner(System.in);
+
+
+        String rooms = scanner.nextLine();
+        String[] line = rooms.split("\\|");
+
+        int health = 100;
+        int coins = 0;
+        int currentRoom = 0;
+
+        for (String element : line) {
+            String[] roomNumber = element.split(" ");
+
+
+            currentRoom++;
+
+            if (roomNumber[0].equals("potion")) {
+                int healing = Integer.parseInt(roomNumber[1]);
+
+                if (health + healing >= 100) {
+                    System.out.printf("You healed for %d hp.%n", (100 - health));
+                    health = 100;
+                } else {
+                    health += healing;
+                    System.out.printf("You healed for %d hp.%n", healing);
+                }
+                System.out.printf("Current health: %d hp.%n", health);
+            } else if (roomNumber[0].equals("chest")) {
+                int countsNumber = Integer.parseInt(roomNumber[1]);
+                coins += countsNumber;
+                System.out.printf("You found %d coins.%n", countsNumber);
+
+            } else {
+                String monster = roomNumber[0];
+                int AD = Integer.parseInt(roomNumber[1]);
+                health -= AD;
+
+                if (health <= 0) {
+                    System.out.printf("You died! Killed by %s.%n", monster);
+                    System.out.printf("Best room: %d%n", currentRoom);
+                    return;
+                } else {
+                    System.out.printf("You slayed %s.%n", monster);
+                }
+            }
+        }
+        System.out.println("You've made it!");
+        System.out.printf("Coins: %d%n", coins);
+        System.out.printf("Health: %d%n", health);
+    }
+}
+
