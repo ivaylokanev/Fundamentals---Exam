@@ -1,0 +1,59 @@
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.*;
+import java.util.stream.Collectors;
+
+
+public class Methods {
+
+
+    public static void main( String[] args ) {
+        Scanner scanner = new Scanner(System.in);
+
+
+        List<String> gifts = Arrays.stream(scanner.nextLine().split(" ")).collect(Collectors.toList());
+
+
+        String command = scanner.nextLine();
+        String element = "";
+
+        while (!command.equals("No Money")) {
+            String[] tokens = command.split(" ");
+
+            switch (tokens[0]) {
+                case "OutOfStock":
+                    for (int i = 0; i < gifts.size(); i++) {
+                        if (gifts.get(i).equals(tokens[1])) {
+                            gifts.set(i, "None");
+                        }
+
+                    }
+                    break;
+                case "Required":
+                    String newGift = tokens[1];
+                    int index = Integer.parseInt(tokens[2]);
+                    if (index >= 0 && index < gifts.size()) {
+                        gifts.set(index, newGift);
+                    }
+                    break;
+                case "JustInCase":
+                    element = tokens[1];
+                    int replaceLastGift = gifts.size() - 1;
+                    gifts.set(replaceLastGift, tokens[1]);
+                    break;
+            }
+
+            command = scanner.nextLine();
+        }
+
+        gifts = gifts.stream().filter(e ->!e.equals("None")).collect(Collectors.toList());
+        for (int i = 0; i < gifts.size(); i++) {
+            System.out.print(gifts.get(i)+" ");
+            
+        }
+
+    }
+}
+
