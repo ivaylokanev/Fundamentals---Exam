@@ -1,0 +1,56 @@
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
+
+public class CommonElements {
+
+    static boolean isFireValid( String type, int value ) {
+        switch (type) {
+            case "High":
+                return 81 <= value && value <= 125;
+            case "Medium":
+                return 51 <= value && value <= 80;
+            case "Low":
+                return 1 <= value && value <= 50;
+            default:
+                return false;
+        }
+    }
+
+    public static void main( String[] args ) {
+
+
+        Scanner scanner = new Scanner(System.in);
+
+        String[] fireCells = scanner.nextLine().split("#");
+        int water = scanner.nextInt();
+
+        double effort = 0;
+        int totalFire = 0;
+
+
+        List<Integer> cellsPutOut = new ArrayList<>();
+
+        for (String cell : fireCells) {
+            String[] typeAndValue = cell.split(" = ");
+            String type = typeAndValue[0];
+            int value = Integer.parseInt(typeAndValue[1]);
+
+            if (isFireValid(type, value) && water >= value ){
+                water -= value;
+                cellsPutOut.add(value);
+                totalFire += value;
+                effort += value * 0.25;
+            }
+        }
+
+
+        System.out.println("Cells:");
+        for (int fire : cellsPutOut) {
+            System.out.println(" - " + fire);
+        }
+
+        System.out.printf("Effort: %.2f%n", effort);
+        System.out.printf("Total Fire: %d", totalFire);
+    }
+}
