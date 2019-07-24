@@ -1,0 +1,52 @@
+package com.company;
+
+
+import java.util.*;
+
+
+public class Main {
+
+    public static void main( String[] args ) {
+        Scanner scanner = new Scanner(System.in);
+
+         String[] input = scanner.nextLine().split("\\s+\\|\\s+");
+
+         Map<String, List<String>> words = new TreeMap<>();
+
+        for (int i = 0; i < input.length ; i++) {
+            String[] tokens = input[i].split(":\\s+");
+            String word = tokens[0];
+            String def = tokens[1];
+
+            if (!words.containsKey(word)) {
+                words.put(word, new ArrayList<>());
+                words.get(word).add(def);
+            } else {
+                words.get(word).add(def);
+            }
+        }
+
+        String[] wordsInDic = scanner.nextLine().split("\\s+\\|\\s+");
+
+        String option = scanner.nextLine();
+
+        switch (option) {
+            case "End":
+                for (int i = 0; i < wordsInDic.length; i++) {
+                    if (words.containsKey(wordsInDic[i])) {
+                        System.out.println(wordsInDic[i]);
+                        words.get(wordsInDic[i]).stream().sorted((d1, d2) -> {
+                            int sort = Integer.compare(d2.length(), d1.length());
+                            return sort;
+                        }).forEach(e -> System.out.println(String.format(" -%s", e.toString().replaceAll("\\[|\\]", ""))));
+                    }
+                }
+                break;
+            case "List":
+                List<String> keys = new ArrayList<>();
+                words.keySet().stream().forEach(e -> keys.add(e));
+                System.out.println(keys.toString().replaceAll("\\[|\\]|,", ""));
+                break;
+        }
+    }
+}
